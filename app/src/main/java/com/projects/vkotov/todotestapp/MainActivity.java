@@ -12,9 +12,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.projects.vkotov.todotestapp.presenter.LoginPresenter;
+import com.projects.vkotov.todotestapp.view.IView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, IView {
+
+    private EditText log;
+    private EditText pas;
+    private Button btn;
+    private LoginPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +50,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        log = findViewById(R.id.login);
+        pas = findViewById(R.id.password);
+        btn = findViewById(R.id.button);
+
+        presenter = new LoginPresenter(this);
+
+        btn.setOnClickListener(view -> presenter.onLoginClick());
     }
 
     @Override
@@ -97,5 +115,15 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public String getLogin() {
+        return log.getText().toString();
+    }
+
+    @Override
+    public String getPassword() {
+        return pas.getText().toString();
     }
 }
