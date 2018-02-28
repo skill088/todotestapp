@@ -1,6 +1,6 @@
 package com.projects.vkotov.todotestapp.model;
 
-import com.projects.vkotov.todotestapp.model.data.Login;
+import com.projects.vkotov.todotestapp.model.dto.LoginDTO;
 
 import io.reactivex.Observable;
 
@@ -10,5 +10,5 @@ import io.reactivex.Observable;
 
 public interface Model {
 
-    Observable<Login> login(String login, String password);
+    Observable<LoginDTO> login(String login, String password);
 }

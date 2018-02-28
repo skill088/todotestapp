@@ -1,6 +1,6 @@
 package com.projects.vkotov.todotestapp.model.api;
 
-import com.projects.vkotov.todotestapp.model.data.Login;
+import com.projects.vkotov.todotestapp.model.dto.LoginDTO;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -15,5 +15,5 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("todo.php?action=sign_in")
-    Observable<Login> login(@Field("login") String email, @Field("password") String pass);
+    Observable<LoginDTO> login(@Field("login") String email, @Field("password") String pass);
 }

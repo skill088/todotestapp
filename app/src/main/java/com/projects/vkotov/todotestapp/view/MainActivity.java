@@ -1,8 +1,11 @@
-package com.projects.vkotov.todotestapp;
+package com.projects.vkotov.todotestapp.view;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,23 +18,36 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.projects.vkotov.todotestapp.R;
 import com.projects.vkotov.todotestapp.presenter.LoginPresenter;
-import com.projects.vkotov.todotestapp.view.IView;
+import com.projects.vkotov.todotestapp.view.fragments.IView;
+import com.projects.vkotov.todotestapp.view.fragments.LoginFragment;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, IView {
+        implements NavigationView.OnNavigationItemSelectedListener, ActivityCallback {
 
-    private EditText log;
-    private EditText pas;
-    private Button btn;
-    private LoginPresenter presenter;
+    private static String TAG = "TAG";
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    private FragmentManager fragmentManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
+        fragmentManager = getSupportFragmentManager();
+
+        Fragment fragment = fragmentManager.findFragmentByTag(TAG);
+        if (fragment == null) replaceFragment(new LoginFragment(), false);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -51,14 +67,22 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        log = findViewById(R.id.login);
-        pas = findViewById(R.id.password);
-        btn = findViewById(R.id.button);
-
-        presenter = new LoginPresenter(this);
-
-        btn.setOnClickListener(view -> presenter.onLoginClick());
+//        log = findViewById(R.id.login);
+//        pas = findViewById(R.id.password);
+//        btn = findViewById(R.id.button);
+//
+////        presenter = new LoginPresenter(this);
+//
+//        btn.setOnClickListener(view -> presenter.onLoginClick());
     }
+
+    private void replaceFragment(Fragment fragment, boolean addBackStack) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.container, fragment, TAG);
+        if (addBackStack) transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -117,13 +141,18 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public String getLogin() {
-        return log.getText().toString();
-    }
+//    @Override
+//    public String getLogin() {
+//        return log.getText().toString();
+//    }
+//
+//    @Override
+//    public String getPassword() {
+//        return pas.getText().toString();
+//    }
 
     @Override
-    public String getPassword() {
-        return pas.getText().toString();
+    public void startTodosFragment() {
+
     }
 }

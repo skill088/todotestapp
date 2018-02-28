@@ -1,4 +1,4 @@
-package com.projects.vkotov.todotestapp.model.data;
+package com.projects.vkotov.todotestapp.model.dto;
 
 import android.support.annotation.Nullable;
 
@@ -11,11 +11,15 @@ import com.google.gson.annotations.SerializedName;
 
 public class ApiResponse {
 
+    public static final int NO_AUTH = 401;
+
     @SerializedName("status")
     @Expose
     private int status;
 
     @Nullable
+    @SerializedName("error")
+    @Expose
     private String error;
 
     public int getStatus() {
@@ -28,5 +32,18 @@ public class ApiResponse {
 
     public String getError() {
         return error;
+    }
+
+    public boolean ok() {
+        return status == 200 || status == 201;
+    }
+
+    public boolean wrongAuth()
+    {
+        return status == NO_AUTH;
+    }
+
+    public void setError(@Nullable String error) {
+        this.error = error;
     }
 }
