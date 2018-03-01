@@ -1,12 +1,16 @@
 package com.projects.vkotov.todotestapp.presenter;
 
-import android.os.Bundle;
 import android.util.Log;
 
 import com.projects.vkotov.todotestapp.model.Model;
 import com.projects.vkotov.todotestapp.model.ModelImpl;
 import com.projects.vkotov.todotestapp.model.dto.LoginDTO;
+import com.projects.vkotov.todotestapp.other.App;
+import com.projects.vkotov.todotestapp.presenter.mappers.LoginMapper;
+import com.projects.vkotov.todotestapp.view.ActivityCallback;
 import com.projects.vkotov.todotestapp.view.fragments.LoginView;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -20,9 +24,20 @@ public class LoginPresenter extends BasePresenter {
 
     private final String TAG = "LoginPresenter";
 
-    private Model model = new ModelImpl();
+    @Inject
+    LoginMapper mapper;
+
     private LoginView view;
     private Disposable dispose = Disposables.empty();
+    private ActivityCallback activityCallback;
+
+    public LoginPresenter() {
+    }
+
+    public LoginPresenter(LoginView view, ActivityCallback activityCallback) {
+        this.view = view;
+        this.activityCallback = activityCallback;
+    }
 
     public LoginPresenter(LoginView view) {
         this.view = view;
@@ -61,6 +76,10 @@ public class LoginPresenter extends BasePresenter {
                     public void onComplete() {}
                 });
         addDisposable(dispose);
+    }
+
+    public void onCreate(LoginView view) {
+        this.view = view;
     }
 
     @Override

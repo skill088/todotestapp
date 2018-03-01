@@ -26,7 +26,7 @@ public class ApiModule {
 //    private static final String AUTH_64 = "***"; //your code here
 
 
-    public static ApiInterface getApiInterface() {
+    public static ApiInterface getApiInterface(String url) {
 
         OkHttpClient httpClient = new OkHttpClient();
 //        httpClient.interceptors().add(new Interceptor() {
@@ -56,7 +56,7 @@ public class ApiModule {
 
         Retrofit.Builder builder = new Retrofit.Builder().
 //                baseUrl("https://api.github.com/")
-                baseUrl(Constants.BASE_URL)
+                baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
 //        if (ENABLE_AUTH) builder.client(httpClient);

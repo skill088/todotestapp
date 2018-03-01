@@ -3,16 +3,22 @@ package com.projects.vkotov.todotestapp.model;
 import android.util.Log;
 
 import com.google.gson.stream.MalformedJsonException;
+import com.projects.vkotov.todotestapp.Constants;
 import com.projects.vkotov.todotestapp.model.api.ApiInterface;
 import com.projects.vkotov.todotestapp.model.api.ApiModule;
 import com.projects.vkotov.todotestapp.model.dto.ApiResponse;
 import com.projects.vkotov.todotestapp.model.dto.LoginDTO;
 import com.projects.vkotov.todotestapp.Error;
+import com.projects.vkotov.todotestapp.other.App;
 
 import java.io.UncheckedIOException;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
@@ -24,13 +30,25 @@ import rx.functions.Action1;
 
 public class ModelImpl implements Model {
 
-    ApiInterface apiInterface = ApiModule.getApiInterface();
+//    ApiInterface apiInterface = ApiModule.getApiInterface(Constants.BASE_URL);
+    @Inject
+    protected ApiInterface apiInterface;
+
+    @Inject
+    @Named(Constants.UI_THREAD)
+    Scheduler uiThread;
+
+    @Inject
+    @Named(Constants.IO_THREAD)
+    Scheduler ioThread;
+
     private final ObservableTransformer schedulersTransformer;
 
     public ModelImpl() {
-        schedulersTransformer = o -> ((Observable) o).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io());
+        App.getComponent().inject(this);
+        schedulersTransformer = o -> ((Observable) o).subscribeOn(ioThread)
+                .observeOn(uiThread)
+                .unsubscribeOn(ioThread);
     }
 
     @Override

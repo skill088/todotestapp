@@ -3,6 +3,7 @@ package com.projects.vkotov.todotestapp.view.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.projects.vkotov.todotestapp.R;
+import com.projects.vkotov.todotestapp.other.App;
+import com.projects.vkotov.todotestapp.other.di.view.DaggerViewComponent;
+import com.projects.vkotov.todotestapp.other.di.view.ViewComponent;
+import com.projects.vkotov.todotestapp.other.di.view.ViewDynamicModule;
 import com.projects.vkotov.todotestapp.presenter.BasePresenter;
 import com.projects.vkotov.todotestapp.presenter.LoginPresenter;
+import com.projects.vkotov.todotestapp.view.ActivityCallback;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +31,8 @@ import butterknife.OnClick;
 
 public class LoginFragment extends BaseFragment implements LoginView{
 
+    private final String TAG = "LoginFragment";
+
     @BindView(R.id.login)
     EditText log;
     @BindView(R.id.password)
@@ -32,13 +42,18 @@ public class LoginFragment extends BaseFragment implements LoginView{
     @BindView(R.id.constraint_layout)
     View layout;
 
+    private ViewComponent viewComponent;
+    private ActivityCallback activityCallback;
+
     @OnClick(R.id.button)
     public void loginClick(View view) {
         makeToast("Pressed");
+        Log.i(TAG, presenter.toString());
         presenter.onLoginClick();
     }
 
-    private LoginPresenter presenter;
+    @Inject
+    LoginPresenter presenter;
 
     public static LoginFragment newInstance() {
         return  new LoginFragment();
@@ -48,6 +63,13 @@ public class LoginFragment extends BaseFragment implements LoginView{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (viewComponent == null) {
+            viewComponent = DaggerViewComponent.builder()
+                    .viewDynamicModule(new ViewDynamicModule(this, activityCallback))
+                    .build();
+        }
+        viewComponent.inject(this);
+        presenter.onCreate(this);
     }
 
     @Nullable
@@ -55,8 +77,6 @@ public class LoginFragment extends BaseFragment implements LoginView{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
-
-        presenter = new LoginPresenter(this);
 
         return view;
     }

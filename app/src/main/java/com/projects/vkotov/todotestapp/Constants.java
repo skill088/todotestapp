@@ -6,4 +6,7 @@ package com.projects.vkotov.todotestapp;
 
 public interface Constants {
     String BASE_URL = "https://skill088.000webhostapp.com/";
+
+    String UI_THREAD = "UI_THREAD";
+    String IO_THREAD = "IO_THREAD";
 }

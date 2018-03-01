@@ -9,6 +9,7 @@ import com.projects.vkotov.todotestapp.presenter.BasePresenter;
  */
 
 public abstract class BaseFragment extends Fragment {
+
     protected abstract BasePresenter getPresenter();
 
     @Override
