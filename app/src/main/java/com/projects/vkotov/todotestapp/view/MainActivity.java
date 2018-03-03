@@ -18,10 +18,12 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.projects.vkotov.todotestapp.Prefs;
 import com.projects.vkotov.todotestapp.R;
 import com.projects.vkotov.todotestapp.presenter.LoginPresenter;
 import com.projects.vkotov.todotestapp.view.fragments.IView;
 import com.projects.vkotov.todotestapp.view.fragments.LoginFragment;
+import com.projects.vkotov.todotestapp.view.fragments.TodoListFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +49,10 @@ public class MainActivity extends AppCompatActivity
         fragmentManager = getSupportFragmentManager();
 
         Fragment fragment = fragmentManager.findFragmentByTag(TAG);
-        if (fragment == null) replaceFragment(new LoginFragment(), false);
+        if (Prefs.getToken(this) == null)
+            replaceFragment(new LoginFragment(), false);
+        else
+            startTodosFragment();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -153,6 +158,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void startTodosFragment() {
-
+        replaceFragment(new TodoListFragment(), false);
     }
 }

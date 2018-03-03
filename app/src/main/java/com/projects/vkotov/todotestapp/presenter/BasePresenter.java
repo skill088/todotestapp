@@ -1,5 +1,7 @@
 package com.projects.vkotov.todotestapp.presenter;
 
+import android.content.Context;
+
 import com.projects.vkotov.todotestapp.model.Model;
 import com.projects.vkotov.todotestapp.model.ModelImpl;
 import com.projects.vkotov.todotestapp.other.App;
@@ -17,6 +19,9 @@ public abstract class BasePresenter implements IPresenter {
 
     @Inject
     protected Model model;
+
+    @Inject
+    protected Context context;
 
     @Inject
     protected CompositeDisposable compositeDisposable;

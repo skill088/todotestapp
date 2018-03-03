@@ -1,8 +1,10 @@
 package com.projects.vkotov.todotestapp.other.di.view;
 
 import com.projects.vkotov.todotestapp.presenter.LoginPresenter;
+import com.projects.vkotov.todotestapp.presenter.TodoListPresenter;
 import com.projects.vkotov.todotestapp.view.ActivityCallback;
 import com.projects.vkotov.todotestapp.view.fragments.LoginView;
+import com.projects.vkotov.todotestapp.view.fragments.TodoListView;
 
 import dagger.Module;
 import dagger.Provides;
@@ -16,6 +18,8 @@ public class ViewDynamicModule {
 
     private LoginView loginView;
 
+    private TodoListView todoListView;
+
     private ActivityCallback activityCallback;
 
     public ViewDynamicModule(LoginView loginView, ActivityCallback activityCallback) {
@@ -23,9 +27,17 @@ public class ViewDynamicModule {
         this.activityCallback = activityCallback;
     }
 
+    public ViewDynamicModule(TodoListView todoListView) {
+        this.todoListView = todoListView;
+    }
+
     @Provides
     LoginPresenter provideLoginPresenter() {
         return new LoginPresenter(loginView, activityCallback);
     }
 
+    @Provides
+    TodoListPresenter provideTodoListPresenter() {
+        return new TodoListPresenter(todoListView);
+    }
 }

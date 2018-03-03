@@ -9,6 +9,7 @@ import com.projects.vkotov.todotestapp.model.api.ApiModule;
 import com.projects.vkotov.todotestapp.model.dto.ApiResponse;
 import com.projects.vkotov.todotestapp.model.dto.LoginDTO;
 import com.projects.vkotov.todotestapp.Error;
+import com.projects.vkotov.todotestapp.model.dto.TodoListDTO;
 import com.projects.vkotov.todotestapp.other.App;
 
 import java.io.UncheckedIOException;
@@ -58,6 +59,13 @@ public class ModelImpl implements Model {
                 .compose(statusAsError());
     }
 
+    @Override
+    public Observable<TodoListDTO> getTodoList(int page) {
+        return apiInterface.getTodoList(page)
+                .compose(applySchedulers())
+                .compose(statusAsError());
+    }
+
     @SuppressWarnings("unchecked")
     private <T> ObservableTransformer<T, T> applySchedulers() {
         return (ObservableTransformer<T, T>) schedulersTransformer;
@@ -82,12 +90,17 @@ public class ModelImpl implements Model {
         return new Error.AuthError(response.getError());
     }
 
+    private Error noItems(ApiResponse response) {
+        return new Error.NoItems(response.getError());
+    }
+
     private Error errorStatusAsError(ApiResponse response) {
         Error e;
         if (response == null) {
             e = new Error.NullResponse();
         } else switch(response.getStatus()) {
             case ApiResponse.NO_AUTH: e = new Error.AuthError(response.getError()); break;
+            case ApiResponse.NO_ITEMS: e = new Error.NoItems(response.getError()); break;
             default: {
                 e = new Error.UnknownStatus(response.getError());
             }

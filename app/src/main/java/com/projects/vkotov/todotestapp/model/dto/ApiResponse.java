@@ -12,6 +12,7 @@ import com.google.gson.annotations.SerializedName;
 public class ApiResponse {
 
     public static final int NO_AUTH = 401;
+    public static final int NO_ITEMS = 404;
 
     @SerializedName("status")
     @Expose

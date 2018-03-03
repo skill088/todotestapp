@@ -2,6 +2,7 @@ package com.projects.vkotov.todotestapp.presenter;
 
 import android.util.Log;
 
+import com.projects.vkotov.todotestapp.Prefs;
 import com.projects.vkotov.todotestapp.model.Model;
 import com.projects.vkotov.todotestapp.model.ModelImpl;
 import com.projects.vkotov.todotestapp.model.dto.LoginDTO;
@@ -37,6 +38,7 @@ public class LoginPresenter extends BasePresenter {
     public LoginPresenter(LoginView view, ActivityCallback activityCallback) {
         this.view = view;
         this.activityCallback = activityCallback;
+        App.getComponent().inject(this);
     }
 
     public LoginPresenter(LoginView view) {
@@ -64,6 +66,8 @@ public class LoginPresenter extends BasePresenter {
                         }*/
                         Log.i(TAG, loginDTO.getToken());
                         Log.i(TAG, String.valueOf(loginDTO.getStatus()));
+                        Prefs.saveToken(context, loginDTO.getToken());
+                        activityCallback.startTodosFragment();
                     }
 
                     @Override

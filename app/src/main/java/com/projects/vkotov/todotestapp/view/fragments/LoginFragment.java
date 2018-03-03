@@ -1,5 +1,6 @@
 package com.projects.vkotov.todotestapp.view.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -79,6 +80,17 @@ public class LoginFragment extends BaseFragment implements LoginView{
         ButterKnife.bind(this, view);
 
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            activityCallback = (ActivityCallback) context;
+            Log.i("MessagesFragment", context.toString() + " attached");
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement ActivityCallback");
+        }
     }
 
     @Override

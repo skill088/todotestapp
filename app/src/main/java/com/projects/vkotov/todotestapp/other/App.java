@@ -3,6 +3,7 @@ package com.projects.vkotov.todotestapp.other;
 import android.app.Application;
 
 import com.projects.vkotov.todotestapp.other.di.AppComponent;
+import com.projects.vkotov.todotestapp.other.di.AppModule;
 import com.projects.vkotov.todotestapp.other.di.DaggerAppComponent;
 
 /**
@@ -20,10 +21,12 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         component = buildComponent();
+        component.inject(this);
     }
 
     protected AppComponent buildComponent() {
         return DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
                 .build();
     }
 }

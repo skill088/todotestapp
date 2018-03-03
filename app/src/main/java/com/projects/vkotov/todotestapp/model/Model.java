@@ -1,6 +1,7 @@
 package com.projects.vkotov.todotestapp.model;
 
 import com.projects.vkotov.todotestapp.model.dto.LoginDTO;
+import com.projects.vkotov.todotestapp.model.dto.TodoListDTO;
 
 import io.reactivex.Observable;
 
@@ -11,4 +12,6 @@ import io.reactivex.Observable;
 public interface Model {
 
     Observable<LoginDTO> login(String login, String password);
+
+    Observable<TodoListDTO> getTodoList(int page);
 }

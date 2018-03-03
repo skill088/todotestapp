@@ -2,6 +2,7 @@ package com.projects.vkotov.todotestapp;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.widget.TextView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +30,10 @@ public abstract class Error extends Exception implements Serializable {
         public UnknownStatus(String message) { super(message); }
     } // ?
 
+    public static class NoItems extends Error {
+        public NoItems(String message) {super(message);}
+    }
+
     public static class NullResponse extends Error {
         public NullResponse() { super(); }
     } // api response is null
@@ -38,6 +43,10 @@ public abstract class Error extends Exception implements Serializable {
         if (e instanceof Error.AuthError) {
             if (TextUtils.isEmpty(message)) {
                 message = context.getString(R.string.error_auth);
+            }
+        } else if (e instanceof Error.NoItems) {
+            if (TextUtils.isEmpty(message)) {
+                message = context.getString(R.string.no_items);
             }
         }
         return  message;

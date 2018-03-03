@@ -1,6 +1,7 @@
 package com.projects.vkotov.todotestapp.other.di.view;
 
 import com.projects.vkotov.todotestapp.view.fragments.LoginFragment;
+import com.projects.vkotov.todotestapp.view.fragments.TodoListFragment;
 
 import javax.inject.Singleton;
 
@@ -15,5 +16,5 @@ import dagger.Component;
 public interface ViewComponent {
 
     void inject(LoginFragment loginFragment);
-
+    void inject(TodoListFragment todoListFragment);
 }

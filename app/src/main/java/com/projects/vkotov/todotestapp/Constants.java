@@ -9,4 +9,7 @@ public interface Constants {
 
     String UI_THREAD = "UI_THREAD";
     String IO_THREAD = "IO_THREAD";
+
+    byte LOAD_THRESHOLD = 3;
+    byte DEFAULT_COUNT = 10;
 }

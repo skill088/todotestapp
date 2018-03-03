@@ -1,5 +1,7 @@
 package com.projects.vkotov.todotestapp.other.di;
 
+import android.content.Context;
+
 import com.projects.vkotov.todotestapp.Constants;
 import com.projects.vkotov.todotestapp.model.api.ApiInterface;
 import com.projects.vkotov.todotestapp.model.api.ApiModule;
@@ -16,12 +18,12 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by skill on 01.03.2018.
  */
-@Module
+@Module(includes = AppModule.class)
 public class ModelModule {
     @Provides
     @Singleton
-    ApiInterface provideApiInterface() {
-        return ApiModule.getApiInterface(Constants.BASE_URL);
+    ApiInterface provideApiInterface(Context context) {
+        return ApiModule.getApiInterface(context);
     }
 
     @Provides
