@@ -1,5 +1,6 @@
 package com.projects.vkotov.todotestapp.model;
 
+import com.projects.vkotov.todotestapp.model.dto.ApiResponse;
 import com.projects.vkotov.todotestapp.model.dto.LoginDTO;
 import com.projects.vkotov.todotestapp.model.dto.TodoListDTO;
 
@@ -13,5 +14,7 @@ public interface Model {
 
     Observable<LoginDTO> login(String login, String password);
 
-    Observable<TodoListDTO> getTodoList(int page);
+    Observable<TodoListDTO> getTodoList(int page, String token);
+
+    Observable<ApiResponse> signOut(String token);
 }

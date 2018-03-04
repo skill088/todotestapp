@@ -1,6 +1,7 @@
 package com.projects.vkotov.todotestapp.presenter;
 
 import android.util.Log;
+import android.view.View;
 
 import com.projects.vkotov.todotestapp.Prefs;
 import com.projects.vkotov.todotestapp.model.Model;
@@ -45,7 +46,7 @@ public class LoginPresenter extends BasePresenter {
         this.view = view;
     }
 
-    public void onLoginClick() {
+    public void onLoginClick(View btn) {
         if (!dispose.isDisposed())
             dispose.dispose();
 
@@ -73,7 +74,9 @@ public class LoginPresenter extends BasePresenter {
                     @Override
                     public void onError(Throwable e) {
                         Log.e(TAG, e.getMessage());
+                        e.printStackTrace();
                         view.showError(e.getMessage());
+                        btn.setEnabled(true);
                     }
 
                     @Override

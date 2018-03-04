@@ -48,9 +48,10 @@ public class LoginFragment extends BaseFragment implements LoginView{
 
     @OnClick(R.id.button)
     public void loginClick(View view) {
-        makeToast("Pressed");
+        makeToast("Wait..");
         Log.i(TAG, presenter.toString());
-        presenter.onLoginClick();
+        presenter.onLoginClick(view);
+        view.setEnabled(false);
     }
 
     @Inject

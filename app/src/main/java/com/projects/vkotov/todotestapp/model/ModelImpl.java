@@ -60,8 +60,15 @@ public class ModelImpl implements Model {
     }
 
     @Override
-    public Observable<TodoListDTO> getTodoList(int page) {
-        return apiInterface.getTodoList(page)
+    public Observable<TodoListDTO> getTodoList(int page, String token) {
+        return apiInterface.getTodoList(page, token)
+                .compose(applySchedulers())
+                .compose(statusAsError());
+    }
+
+    @Override
+    public Observable<ApiResponse> signOut(String token) {
+        return apiInterface.signOut(token)
                 .compose(applySchedulers())
                 .compose(statusAsError());
     }

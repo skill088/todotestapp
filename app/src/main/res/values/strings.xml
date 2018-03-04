@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">todotestapp</string>
+    <string name="app_name">TODOtestapp</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -8,4 +8,16 @@
     <string name="error_auth">Authorization failed</string>
     <string name="no_items">No items</string>
     <string name="retry">Повтор</string>
+    <string name="action_search">Поиск</string>
+    <string name="filter_unchecked">Show only incompleted</string>
+    <string name="filter_checked">Show only completed</string>
+    <string name="edit">edit</string>
+    <string name="delete">delete</string>
+    <string name="todo_test_app">TODO test app</string>
+    <string name="git">https://github.com/skill088/todotestapp</string>
+    <string name="account">Account</string>
+    <string name="log_out">Log out</string>
+    <string name="login_hint">login</string>
+    <string name="login_button">Login</string>
+    <string name="password_hint">password</string>
 </resources>

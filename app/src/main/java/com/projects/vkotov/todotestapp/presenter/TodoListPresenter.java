@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.projects.vkotov.todotestapp.Constants;
 import com.projects.vkotov.todotestapp.Error;
+import com.projects.vkotov.todotestapp.Prefs;
 import com.projects.vkotov.todotestapp.other.App;
 import com.projects.vkotov.todotestapp.presenter.mappers.TodoMapper;
 import com.projects.vkotov.todotestapp.presenter.vo.Todo;
@@ -36,9 +37,9 @@ public class TodoListPresenter extends BasePresenter {
     TodoMapper mapper;
 
     private TodoListView view;
-    private Disposable dispose = Disposables.empty();
     private boolean isLoading = false;
     protected boolean canLoadMore = true;
+    private String token;
 
     private TodoList todoObj;
     List<Todo> items;
@@ -53,6 +54,7 @@ public class TodoListPresenter extends BasePresenter {
     public TodoListPresenter(TodoListView view) {
         this.view = view;
         App.getComponent().inject(this);
+        token = Prefs.getToken(context);
     }
 
     protected boolean todoListIsNull() {
@@ -85,7 +87,7 @@ public class TodoListPresenter extends BasePresenter {
         Log.i(TAG, "Loading first page");
         isLoading = true;
         view.showLoading();  // TODO: 02.03.2018 припилить
-        model.getTodoList(page)
+        model.getTodoList(page, token)
                 .map(mapper)
                 .subscribe(new Observer<TodoList>() {
                     @Override
@@ -137,7 +139,7 @@ public class TodoListPresenter extends BasePresenter {
         }
         int pageNum = ((todoObj.getItems().size() - 1) / Constants.DEFAULT_COUNT) + 2;
         isLoading = true;
-        model.getTodoList(pageNum)
+        model.getTodoList(pageNum, token)
                 .map(mapper)
                 .subscribe(new Observer<TodoList>() {
                     @Override
@@ -150,6 +152,7 @@ public class TodoListPresenter extends BasePresenter {
                         if (todoList.getIsLastPage() == 1) {
                             canLoadMore = false;
                             todoObj.setIsLastPage(1);
+                            view.showNoMore();
                         }
                         if (todoList.getItems() != null && !todoList.getItems().isEmpty()) {
                             todoObj.getItems().addAll(todoList.getItems());
@@ -180,5 +183,28 @@ public class TodoListPresenter extends BasePresenter {
     public void reload() {
         this.todoObj = null;
         getTodo(1);
+    }
+
+    public void complete(long id) {
+        for (Todo item : todoObj.getItems()) {
+            if (item.getId() == id) {
+                int status = (item.getIsCompleted()==1)?0:1;
+                item.setIsCompleted(status);
+            }
+        }
+        view.showTodo(todoObj);
+    }
+
+    public void deleteItem(long id) {
+        view.deleteItem(id);
+    }
+
+    public void editItem(long id) {
+        Todo todo = null;
+        for (Todo todo1 : todoObj.getItems()) {
+            if (todo1.getId() == id)
+                todo = todo1;
+        }
+        view.editeItem(id, todo);
     }
 }

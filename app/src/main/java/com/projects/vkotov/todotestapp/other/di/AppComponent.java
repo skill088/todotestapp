@@ -5,6 +5,7 @@ import com.projects.vkotov.todotestapp.other.App;
 import com.projects.vkotov.todotestapp.presenter.BasePresenter;
 import com.projects.vkotov.todotestapp.presenter.LoginPresenter;
 import com.projects.vkotov.todotestapp.presenter.TodoListPresenter;
+import com.projects.vkotov.todotestapp.view.MainActivity;
 import com.projects.vkotov.todotestapp.view.fragments.LoginFragment;
 
 import javax.inject.Singleton;
@@ -23,6 +24,8 @@ public interface AppComponent {
     void inject(ModelImpl dataRepository);
 
     void inject(BasePresenter basePresenter);
+
+    void inject(MainActivity activity);
 
     void inject(LoginPresenter loginPresenter);
 

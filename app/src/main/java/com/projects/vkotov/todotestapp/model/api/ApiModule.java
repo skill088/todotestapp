@@ -36,28 +36,17 @@ public class ApiModule {
                 .connectTimeout(15, TimeUnit.SECONDS);
 
 //        if (Prefs.getToken(context)!=null) {
-//            httpClient.interceptors().add(chain -> {
+//            httpClient.addInterceptor(chain -> {
 //                Request original = chain.request();
+//
 //                Request request = original.newBuilder()
 //                        .header("Token", Prefs.getToken(context))
 //                        .method(original.method(), original.body())
 //                        .build();
+//
 //                return chain.proceed(request);
 //            });
 //        }
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
-                Request original = chain.request();
-
-                Request request = original.newBuilder()
-                        .header("Token", Prefs.getToken(context))
-                        .method(original.method(), original.body())
-                        .build();
-
-                return chain.proceed(request);
-            }
-        });
 
 //         Trace serve response
         if (BuildConfig.DEBUG) {

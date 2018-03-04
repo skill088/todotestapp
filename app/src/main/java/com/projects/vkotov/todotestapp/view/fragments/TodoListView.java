@@ -1,6 +1,7 @@
 package com.projects.vkotov.todotestapp.view.fragments;
 
 import com.projects.vkotov.todotestapp.Error;
+import com.projects.vkotov.todotestapp.presenter.vo.Todo;
 import com.projects.vkotov.todotestapp.presenter.vo.TodoList;
 
 /**
@@ -22,4 +23,10 @@ public interface TodoListView {
     void prepareShowData();
 
     void setRefreshing(boolean refreshing);
+
+    void showNoMore();
+
+    void deleteItem(long id);
+
+    void editeItem(long id, Todo todo);
 }
