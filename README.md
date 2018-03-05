@@ -31,4 +31,5 @@
  ![End of list](https://s8.hostingkartinok.com/uploads/images/2018/03/e36a3c587c5334ed5b6d4fd14a0c294a.jpg)
  ![Search with filters](https://s8.hostingkartinok.com/uploads/images/2018/03/13600a4d8f5c626c4e5227b43d02b29c.jpg)
  ![Menu](https://s8.hostingkartinok.com/uploads/images/2018/03/cc786d3c552f4890e92aed6e9d6b2a2d.jpg)
+ ![Delete item](https://s8.hostingkartinok.com/uploads/images/2018/03/d8724e7cb63394ae1f1e41102e5ff20c.jpg)
  
