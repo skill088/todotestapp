@@ -202,7 +202,14 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-//    @Override
+    @Override
+    protected void onStop() {
+        if (!dispose.isDisposed()) {
+            dispose.dispose();
+        }
+        super.onStop();
+    }
+    //    @Override
 //    public String getLogin() {
 //        return log.getText().toString();
 //    }
