@@ -22,7 +22,7 @@ public interface TodoListView {
 
     void prepareShowData();
 
-    void setRefreshing(boolean refreshing);
+//    void setRefreshing(boolean refreshing);
 
     void showNoMore();
 

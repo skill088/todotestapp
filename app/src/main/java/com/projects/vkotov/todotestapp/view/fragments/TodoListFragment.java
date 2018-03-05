@@ -43,7 +43,7 @@ import butterknife.OnClick;
  * Created by skill on 01.03.2018.
  */
 
-public class TodoListFragment extends BaseFragment implements TodoListView, SwipeRefreshLayout.OnRefreshListener{
+public class TodoListFragment extends BaseFragment implements TodoListView/*, SwipeRefreshLayout.OnRefreshListener*/{
 
     private final String TAG = "TodoListFragment";
 
@@ -53,7 +53,7 @@ public class TodoListFragment extends BaseFragment implements TodoListView, Swip
     @BindView(R.id.retryButton)     Button retryButton;
     @BindView(R.id.list)            RecyclerView list;
     @BindView(R.id.relative_layout) View layout;
-    @BindView(R.id.swipe_container) SwipeRefreshLayout mSwipeRefreshLayout;
+//    @BindView(R.id.swipe_container) SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.checkedViews)    View checkedViews;
     @BindView(R.id.checked)         CheckedTextView checked;
     @BindView(R.id.unchecked)       CheckedTextView unchecked;
@@ -116,7 +116,7 @@ public class TodoListFragment extends BaseFragment implements TodoListView, Swip
         list.setLayoutManager(layoutManager);
         adapter = new TodoAdapter(presenter);
         list.setAdapter(adapter);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+//        mSwipeRefreshLayout.setOnRefreshListener(this);
         setHasOptionsMenu(true);
         presenter.onCreateView();
         return view;
@@ -222,15 +222,15 @@ public class TodoListFragment extends BaseFragment implements TodoListView, Swip
         presenter.reload();
     }
 
-    @Override
-    public void onRefresh() {
-        reload();
-    }
+//    @Override
+//    public void onRefresh() {
+//        reload();
+//    }
 
-    @Override
-    public void setRefreshing(boolean refreshing) {
-        mSwipeRefreshLayout.setRefreshing(refreshing);
-    }
+//    @Override
+//    public void setRefreshing(boolean refreshing) {
+//        mSwipeRefreshLayout.setRefreshing(refreshing);
+//    }
 
     @Override
     public void deleteItem(long id) {

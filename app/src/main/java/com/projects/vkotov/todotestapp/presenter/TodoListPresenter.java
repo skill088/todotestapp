@@ -117,7 +117,7 @@ public class TodoListPresenter extends BasePresenter {
                     @Override
                     public void onComplete() {
                         isLoading = false;
-                        view.setRefreshing(false);
+//                        view.setRefreshing(false);
                     }
         });
     }
