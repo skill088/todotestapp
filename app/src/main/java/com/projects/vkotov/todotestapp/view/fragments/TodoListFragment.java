@@ -128,6 +128,7 @@ public class TodoListFragment extends BaseFragment implements TodoListView, Swip
         if (menuItem != null) {
             menuItem.setVisible(true);
             SearchView searchView = (SearchView) menuItem.getActionView();
+            searchView.setMaxWidth(Integer.MAX_VALUE);
             searchView.setOnSearchClickListener(view -> checkedViews.setVisibility(View.VISIBLE));
 //            searchView.setOnClickListener(view -> checkedViews.setVisibility(View.VISIBLE));
             searchView.setOnCloseListener(() -> {
@@ -138,13 +139,15 @@ public class TodoListFragment extends BaseFragment implements TodoListView, Swip
                 @Override
                 public boolean onQueryTextSubmit(String query) {
 //                    adapter.filter(query);
+                    adapter.getFilter().filter(query);
                     return false;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    adapter.filter(newText);
-                    return true;
+//                    adapter.filter(newText);
+                    adapter.getFilter().filter(newText);
+                    return false;
                 }
             });
         }
@@ -159,7 +162,6 @@ public class TodoListFragment extends BaseFragment implements TodoListView, Swip
     @Override
     public void showTodo(TodoList todoList) {
         prepareShowData();
-        adapter.setItem(todoList);
         adapter.setList(todoList.getItems());
     }
 
@@ -241,7 +243,7 @@ public class TodoListFragment extends BaseFragment implements TodoListView, Swip
     }
 
     @Override
-    public void editeItem(long id, Todo todo) {
+    public void editItem(long id, Todo todo) {
         Snackbar.make(layout, "Editing items is under development", Snackbar.LENGTH_LONG).show();
     }
 }

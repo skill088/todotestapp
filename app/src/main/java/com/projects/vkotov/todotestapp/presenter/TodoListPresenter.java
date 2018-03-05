@@ -10,10 +10,7 @@ import com.projects.vkotov.todotestapp.other.App;
 import com.projects.vkotov.todotestapp.presenter.mappers.TodoMapper;
 import com.projects.vkotov.todotestapp.presenter.vo.Todo;
 import com.projects.vkotov.todotestapp.presenter.vo.TodoList;
-import com.projects.vkotov.todotestapp.view.ActivityCallback;
 import com.projects.vkotov.todotestapp.view.fragments.TodoListView;
-
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -21,7 +18,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.disposables.Disposables;
 
 /**
  * Created by skill on 01.03.2018.
@@ -205,6 +201,6 @@ public class TodoListPresenter extends BasePresenter {
             if (todo1.getId() == id)
                 todo = todo1;
         }
-        view.editeItem(id, todo);
+        view.editItem(id, todo);
     }
 }

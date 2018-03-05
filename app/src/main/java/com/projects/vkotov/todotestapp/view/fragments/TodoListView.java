@@ -28,5 +28,5 @@ public interface TodoListView {
 
     void deleteItem(long id);
 
-    void editeItem(long id, Todo todo);
+    void editItem(long id, Todo todo);
 }

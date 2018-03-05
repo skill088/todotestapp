@@ -1,12 +1,12 @@
 package com.projects.vkotov.todotestapp.view.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,31 +28,25 @@ import butterknife.OnClick;
  * Created by skill on 02.03.2018.
  */
 
-public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
+public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> implements Filterable{
 
     private final String TAG = "TodoAdapter";
 
     private TodoListPresenter presenter;
-    protected TodoList todoList;
     protected List<Todo> list = new ArrayList<>();
     protected List<Todo> listCopy = new ArrayList<>();
-    protected List<Todo> templist = new ArrayList<>();
+    protected List<Todo> listUnfiltered = new ArrayList<>();
 
     public TodoAdapter(TodoListPresenter presenter) {
         this.presenter = presenter;
         setHasStableIds(true);
     }
 
-    public void setItem(TodoList obj) {
-        todoList = obj;
-        notifyDataSetChanged();
-    }
-
     public void setList(List<Todo> list) {
         listCopy.clear();
         this.list = list;
         listCopy.addAll(list);
-        templist.addAll(list);
+        this.listUnfiltered = list;
         notifyDataSetChanged();
     }
 
@@ -88,6 +82,37 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
         if (candidat != null)
             list.remove(candidat);
         notifyDataSetChanged();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    list = listUnfiltered;
+                } else {
+                    List<Todo> filteredList = new ArrayList<>();
+                    for (Todo row : list) {
+                        if (row.getContent().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+                    list = filteredList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = list;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                //noinspection unchecked
+                list = (ArrayList<Todo>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -132,40 +157,21 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
         return list.get(position).getId();
     }
 
-    public void filter(String text) {
-        list.clear();
-        if(text.isEmpty()){
-            list.addAll(templist);
-        } else {
-            text = text.toLowerCase();
-            for(Todo item: templist){
-                if(item.getContent().toLowerCase().contains(text)){
-                    list.add(item);
-                }
-            }
-        }
-        notifyDataSetChanged();
-    }
-
     public void filterChecked() {
-        templist.clear();
         list.clear();
         for (Todo item : listCopy) {
             if (item.getIsCompleted() == 1)
                 list.add(item);
         }
-        templist.addAll(list);
         notifyDataSetChanged();
     }
 
     public void filterUnchecked() {
-        templist.clear();
         list.clear();
         for (Todo item : listCopy) {
             if (item.getIsCompleted() == 0)
                 list.add(item);
         }
-        templist.addAll(list);
         notifyDataSetChanged();
     }
 
